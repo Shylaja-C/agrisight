@@ -1,9 +1,9 @@
-# AgriSight – Requirements for Streamlit Cloud & Local Deployment
-# CPU-only PyTorch (reduces container image footprint and avoids CUDA overhead)
+# AgriSight – Streamlit Cloud Deployment Requirements
 --extra-index-url https://download.pytorch.org/whl/cpu
 
-torch==2.2.2
-torchvision==0.17.2
+# CPU-only PyTorch (lightweight, prevents out-of-memory container kills)
+torch
+torchvision
 
 # Explainability & Computer Vision
 grad-cam>=1.4.8
@@ -20,4 +20,3 @@ scikit-learn
 PyYAML
 fpdf2
 tqdm
-kagglehub
