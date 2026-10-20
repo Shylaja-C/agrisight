@@ -1,0 +1,142 @@
+================================================================================
+AGRISIGHT - GIT SETUP COMMANDS
+================================================================================
+
+IMPORTANT: Once you create your GitHub repository, paste the URL here:
+
+YOUR REPO URL: _______________________________________
+                (e.g., https://github.com/yourusername/agrisight)
+
+
+================================================================================
+STEP 1: CREATE GITHUB REPOSITORY
+================================================================================
+
+1. Go to: https://github.com/new
+2. Repository name: agrisight
+3. Description: Explainable crop disease detection with domain gap analysis
+4. Public or Private: Your choice
+5. DON'T initialize with README (we already have one)
+6. Click "Create repository"
+7. COPY the repository URL shown on the next page
+
+
+================================================================================
+STEP 2: VERIFY WHAT WILL BE COMMITTED
+================================================================================
+
+Run this command to see what files will be uploaded:
+
+    git status
+
+Files that WILL be committed (good):
+  - All .py files
+  - requirements.txt
+  - README.md
+  - HOW_TO_RUN.md
+  - QUICKSTART.md
+  - .gitignore
+
+Files that WON'T be committed (good - too large):
+  - plantdoc_reorganized/ (7GB+ dataset)
+  - outputs/*.pt (trained models)
+  - results/ (generated files)
+  - dataset_paths.txt (local paths)
+
+If you see large folders, they'll be ignored by .gitignore automatically.
+
+
+================================================================================
+STEP 3: EXACT COMMANDS TO RUN
+================================================================================
+
+Copy and paste these commands ONE BY ONE:
+
+# Initialize Git repository
+git init
+
+# Check what's being staged
+git status
+
+# Stage all files (ignores large files via .gitignore)
+git add .
+
+# Verify staged files (should NOT include plantdoc_reorganized/ or outputs/*.pt)
+git status
+
+# Create first commit
+git commit -m "Initial AgriSight project upload"
+
+# Rename branch to main
+git branch -M main
+
+# Add your GitHub remote (REPLACE <YOUR-REPO-URL> with your actual URL)
+git remote add origin <YOUR-REPO-URL>
+
+# Verify remote is set correctly
+git remote -v
+
+# Push to GitHub
+git push -u origin main
+
+
+================================================================================
+STEP 4: AFTER YOU CREATE YOUR REPO
+================================================================================
+
+Send me your GitHub URL and I'll give you the EXACT commands with no placeholders!
+
+Example URL format:
+  https://github.com/yourusername/agrisight
+
+Then I'll provide:
+  git remote add origin https://github.com/yourusername/agrisight
+  git push -u origin main
+
+
+================================================================================
+WHAT GETS UPLOADED (Approximate Sizes)
+================================================================================
+
+✅ Python code files         ~50 KB
+✅ Documentation             ~30 KB  
+✅ Configuration files       ~5 KB
+✅ Demo notebook template    ~10 KB
+
+❌ plantdoc_reorganized/     ~7 GB (gitignored)
+❌ outputs/*.pt              ~20-50 MB each (gitignored)
+❌ results/                  ~5 MB (gitignored)
+
+TOTAL UPLOAD SIZE: ~100 KB (very fast!)
+
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+"fatal: not a git repository"
+→ Run: git init
+
+"remote origin already exists"
+→ Run: git remote remove origin
+→ Then: git remote add origin <YOUR-URL>
+
+Upload is slow/stuck
+→ Check if large files are staged: git status
+→ They should be ignored by .gitignore
+
+Can't push
+→ Check remote: git remote -v
+→ Verify GitHub URL is correct
+
+
+================================================================================
+NEXT STEP
+================================================================================
+
+1. Create your GitHub repo
+2. Copy the repository URL
+3. Paste it here or send it to me
+4. I'll give you the exact commands!
+
+================================================================================

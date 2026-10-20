@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# ===================================
+# AGRISIGHT SPECIFIC - DO NOT COMMIT
+# ===================================
+
+# Large datasets (DO NOT UPLOAD)
+plantdoc_reorganized/
+data/pv_splits.csv
+data/pd_test.csv
+
+# Trained models (too large for GitHub)
+outputs/*.pt
+outputs/demo_untrained.pt
+!outputs/.gitkeep
+
+# Evaluation results
+results/*.json
+results/*.png
+results/*_failures/
+results/summary.md
+!results/.gitkeep
+
+# Kaggle cache
+.cache/
+kagglehub/
+
+# Temporary files
+*.tmp
+*.log
+dataset_paths.txt
+
+# OS
+.DS_Store
+Thumbs.db

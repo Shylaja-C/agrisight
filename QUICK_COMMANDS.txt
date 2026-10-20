@@ -1,0 +1,113 @@
+================================================================================
+AGRISIGHT - QUICK COMMAND REFERENCE
+================================================================================
+
+YOUR CURRENT STATUS:
+✅ Data prepared (18 classes, 9,833 PlantVillage images, 3,949 PlantDoc images)
+✅ Demo checkpoint created
+⏳ NEXT: Train models on Kaggle with GPU
+
+================================================================================
+OPTION 1: KAGGLE TRAINING (RECOMMENDED - 60 min with free GPU)
+================================================================================
+
+1. Go to https://www.kaggle.com/code → New Notebook
+2. Settings → GPU P100 or T4
+3. Add Data: "mohitsingh1804/plantvillage" and "andresmgs/plantdec"
+4. Upload your .py files or clone from GitHub
+5. Copy-paste cells from: kaggle_training_notebook.py
+
+Key commands (in Kaggle):
+--------------------------
+!pip install grad-cam -q
+!python reorganize_plantdoc.py --yolo_root /kaggle/input/plantdec --output plantdoc_reorganized
+!python check_classes.py --pv_root /kaggle/input/plantvillage/PlantVillage/train --pd_root plantdoc_reorganized
+!python prepare_data.py --pv_root /kaggle/input/plantvillage/PlantVillage/train --pd_root plantdoc_reorganized
+!python train.py --model baseline --aug basic --epochs1 10 --epochs2 0 --run baseline_basic
+!python train.py --model mobilenet_v3 --aug basic --run mobilenet_basic
+!python train.py --model mobilenet_v3 --aug field --run mobilenet_field
+!python evaluate.py --ckpt outputs/baseline_basic.pt --failures 8
+!python evaluate.py --ckpt outputs/mobilenet_basic.pt --failures 8
+!python evaluate.py --ckpt outputs/mobilenet_field.pt --failures 8
+!python compare.py
+!cat results/summary.md
+!zip -r agrisight_results.zip outputs/ results/
+
+6. Download agrisight_results.zip
+7. Extract to your local agrisight/ folder
+8. Run: streamlit run app.py
+
+================================================================================
+OPTION 2: TEST DEMO LOCALLY (2 minutes, no training)
+================================================================================
+
+streamlit run app.py
+
+(Uses demo checkpoint - predictions will be random/inaccurate)
+
+================================================================================
+YOUR LOCAL DATASET PATHS
+================================================================================
+
+PlantVillage:
+C:\Users\91744\.cache\kagglehub\datasets\mohitsingh1804\plantvillage\versions\1\PlantVillage\train
+
+PlantDoc (reorganized):
+plantdoc_reorganized
+
+Data splits:
+data/pv_splits.csv  (PlantVillage train/val/test)
+data/pd_test.csv    (PlantDoc external test)
+data/classes.json   (18 class names)
+
+================================================================================
+FILES YOU'LL NEED ON KAGGLE
+================================================================================
+
+Upload these to Kaggle notebook:
+- check_classes.py
+- compare.py
+- config.py
+- data.py
+- evaluate.py
+- gradcam_utils.py
+- models.py
+- prepare_data.py
+- reorganize_plantdoc.py
+- train.py
+
+================================================================================
+EXPECTED OUTPUT AFTER TRAINING
+================================================================================
+
+outputs/
+  ├── baseline_basic.pt
+  ├── mobilenet_basic.pt
+  └── mobilenet_field.pt
+
+results/
+  ├── baseline_basic.json
+  ├── mobilenet_basic.json
+  ├── mobilenet_field.json
+  ├── *_plantdoc_cm.png (confusion matrices)
+  ├── *_failures/ (Grad-CAM examples)
+  └── summary.md (FINAL RESULTS TABLE - paste into report)
+
+================================================================================
+TIME ESTIMATES
+================================================================================
+
+Kaggle GPU:  ~60 min total
+Your PC CPU: ~16-20 hours total  ← NOT RECOMMENDED
+
+================================================================================
+HELP & DOCUMENTATION
+================================================================================
+
+Full instructions:     HOW_TO_RUN.md
+Quick start guide:     QUICKSTART.md
+Kaggle cells:          kaggle_training_notebook.py
+Project overview:      README.md
+This file:             QUICK_COMMANDS.txt
+
+================================================================================
