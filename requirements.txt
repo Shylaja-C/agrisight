@@ -1,10 +1,13 @@
 torch
 torchvision
 grad-cam
-streamlit
+streamlit>=1.28
+streamlit-option-menu
 scikit-learn
 matplotlib
 Pillow
 numpy
 tqdm
 kagglehub
+supabase>=2.0.0
+python-dotenv

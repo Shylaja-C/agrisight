@@ -35,7 +35,7 @@ if up:
         for i in top: st.progress(float(probs[i]), text=f"{pretty(classes[i])}: {probs[i]:.0%}")
     if conf < thr:
         st.warning("Low confidence. Please retake the photo (close-up, good light, single leaf) or consult an agricultural expert.")
-    if gu.background_reliance(cam) > 0.55:
+    if gu.background_reliance(cam) > 0.80:
         st.info("The model's attention is mostly at the image border, so the prediction may rely on background. Treat it with extra caution.")
     st.caption(f"Model: {ck['model']} | training augmentation: {ck.get('aug')} | classes covered: {len(classes)}")
 else:
