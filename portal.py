@@ -636,64 +636,66 @@ def page_scan():
 
             # Result card
             fill_cls = ["bar-fill", "bar-fill2", "bar-fill3"]
-            bars_html = ""
-            for j, (nm, pr) in enumerate(zip(top_names, top_probs)):
-                cr, co = _split(nm)
-                label = f"{cr}: {co}" if co else cr
-                bars_html += f"""
-                <div class="bar-wrap">
-                    <div class="bar-label"><span>{label}</span><span><b>{pr:.0%}</b></span></div>
-                    <div class="bar-track">
-                        <div class="{fill_cls[j]}" style="width:{pr*100:.1f}%"></div>
-                    </div>
-                </div>"""
+            bars_html = "".join([
+                f'<div class="bar-wrap">'
+                f'<div class="bar-label"><span>{(_split(nm)[0] + ": " + _split(nm)[1]) if _split(nm)[1] else _split(nm)[0]}</span>'
+                f'<span><b>{pr:.0%}</b></span></div>'
+                f'<div class="bar-track">'
+                f'<div class="{fill_cls[j]}" style="width:{pr*100:.1f}%"></div>'
+                f'</div>'
+                f'</div>'
+                for j, (nm, pr) in enumerate(zip(top_names, top_probs))
+            ])
 
             conf_cls = _conf_class(conf)
             conf_emoji = _conf_emoji(conf)
-            st.markdown(f"""
-            <div class="result-card">
-                <p class="result-crop">{conf_emoji} {crop_name}</p>
-                <p class="result-cond">{condition if condition else "Healthy / Unspecified"}</p>
-                <p class="{conf_cls}" style="margin:0">Confidence: {conf:.1%}</p>
-                <div class="conf-bar"></div>
-                <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;
-                   letter-spacing:0.07em;color:#7A9A6A;margin:0.5rem 0 0.4rem">Top 3 predictions</p>
-                {bars_html}
-            </div>
-            """, unsafe_allow_html=True)
+            result_html = (
+                f'<div class="result-card">'
+                f'<p class="result-crop">{conf_emoji} {crop_name}</p>'
+                f'<p class="result-cond">{condition if condition else "Healthy / Unspecified"}</p>'
+                f'<p class="{conf_cls}" style="margin:0">Confidence: {conf:.1%}</p>'
+                f'<div class="conf-bar"></div>'
+                f'<p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;'
+                f'letter-spacing:0.07em;color:#7A9A6A;margin:0.5rem 0 0.4rem">Top 3 predictions</p>'
+                f'{bars_html}'
+                f'</div>'
+            )
+            st.markdown(result_html, unsafe_allow_html=True)
 
             # Low confidence
             if conf < thr:
-                st.markdown(f"""
-                <div class="warn-box">
-                    <strong>⚠️ Low confidence ({conf:.0%}) — tips for a better photo</strong>
-                    <ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.88rem;">
-                        <li>Use a single leaf filling most of the frame</li>
-                        <li>Natural daylight — avoid harsh shadows</li>
-                        <li>Hold steady — no motion blur</li>
-                        <li>Include the affected spots clearly</li>
-                    </ul>
-                </div>
-                """, unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="warn-box">'
+                    f'<strong>⚠️ Low confidence ({conf:.0%}) — tips for a better photo</strong>'
+                    f'<ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.88rem;">'
+                    f'<li>Use a single leaf filling most of the frame</li>'
+                    f'<li>Natural daylight — avoid harsh shadows</li>'
+                    f'<li>Hold steady — no motion blur</li>'
+                    f'<li>Include the affected spots clearly</li>'
+                    f'</ul></div>',
+                    unsafe_allow_html=True,
+                )
 
             # Border attention
             if gu.background_reliance(cam) > 0.80:
-                st.markdown("""
-                <div class="info-box">
-                    ℹ️ <strong>Background attention detected.</strong>
-                    The model focused on the image border rather than the leaf.
-                    Retake with the leaf centred and the background minimised.
-                </div>
-                """, unsafe_allow_html=True)
+                st.markdown(
+                    '<div class="info-box">'
+                    'ℹ️ <strong>Background attention detected.</strong> '
+                    'The model focused on the image border rather than the leaf. '
+                    'Retake with the leaf centred and the background minimised.'
+                    '</div>',
+                    unsafe_allow_html=True,
+                )
 
             # Disclaimer
-            st.markdown("""
-            <div class="disc-box">
-                <strong>Research prototype — not a diagnosis.</strong>
-                Consult an agricultural expert before any decision.
-                AgriSight does not recommend pesticides or treatments.
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(
+                '<div class="disc-box">'
+                '<strong>Research prototype — not a diagnosis.</strong> '
+                'Consult an agricultural expert before any decision. '
+                'AgriSight does not recommend pesticides or treatments.'
+                '</div>',
+                unsafe_allow_html=True,
+            )
 
     # ── Grad-CAM section ──
     if img is not None and 'overlay' in dir():
