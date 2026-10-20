@@ -1,21 +1,25 @@
-# Python
+# Python bytecode and caches
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+
+# Virtual environments
 env/
 venv/
 ENV/
+.env/
+.venv/
+
+# Build artefacts
 build/
-develop-eggs/
 dist/
-downloads/
+develop-eggs/
 eggs/
 .eggs/
 lib/
 lib64/
-parts/
 sdist/
 var/
 wheels/
@@ -23,45 +27,63 @@ wheels/
 .installed.cfg
 *.egg
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Jupyter / IPython
+.ipynb_checkpoints/
 
-# PyCharm
+# IDE directories
 .idea/
-
-# VS Code
 .vscode/
 
-# ===================================
-# AGRISIGHT SPECIFIC - DO NOT COMMIT
-# ===================================
+# OS files
+.DS_Store
+Thumbs.db
 
-# Large datasets (DO NOT UPLOAD)
+# ===================================================
+# AGRISIGHT: LARGE DATA FILES — DO NOT COMMIT
+# ===================================================
+
+# Raw datasets (7 GB+) — download with download_datasets.py
 plantdoc_reorganized/
+
+# Regenerable split CSVs — rebuild with prepare_data.py
 data/pv_splits.csv
 data/pd_test.csv
 
-# Trained models (too large for GitHub)
-outputs/*.pt
-outputs/demo_untrained.pt
-!outputs/.gitkeep
+# Local dataset paths (machine-specific)
+dataset_paths.txt
 
-# Evaluation results
-results/*.json
-results/*.png
-results/*_failures/
-results/summary.md
-!results/.gitkeep
-
-# Kaggle cache
+# Kaggle download cache
 .cache/
 kagglehub/
 
-# Temporary files
+# ===================================================
+# AGRISIGHT: OUTPUTS — KEEP TRAINED CHECKPOINTS
+# ===================================================
+
+# Keep final checkpoints (all < 20 MB, well under GitHub 100 MB limit)
+# outputs/*.pt files are KEPT — do NOT add outputs/*.pt to .gitignore
+
+# Exclude only the placeholder demo checkpoint (untrained, misleading)
+outputs/demo_untrained.pt
+
+# Keep .gitkeep placeholder to preserve the outputs/ folder in git
+!outputs/.gitkeep
+
+# ===================================================
+# AGRISIGHT: RESULTS — KEEP ALL
+# ===================================================
+
+# results/ is kept in full (JSON, PNG, failure directories, summary.md)
+# Nothing in results/ is gitignored
+
+# ===================================================
+# TEMPORARY / GENERATED FILES
+# ===================================================
+
 *.tmp
 *.log
-dataset_paths.txt
 
-# OS
-.DS_Store
-Thumbs.db
+# PowerShell scripts (internal workflow helpers, not needed by users)
+safe_git_push.ps1
+run_demo.ps1
+PUSH_RESULTS.txt

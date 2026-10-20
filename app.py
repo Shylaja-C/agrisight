@@ -1,42 +1,90 @@
-"""AgriSight demo.   streamlit run app.py"""
-import glob, os
-import numpy as np, streamlit as st
-from PIL import Image
-import torch, models, gradcam_utils as gu
+"""
+app.py  -  AgriSight  |  streamlit run app.py
+Redesigned entry-point.  AI logic (models, gradcam_utils, config, data) unchanged.
+"""
+import streamlit as st
+import styles
 
-st.set_page_config(page_title="AgriSight", page_icon="🌿", layout="wide")
-st.title("🌿 AgriSight: Explainable Crop Stress Detection")
-st.caption("Research prototype for the AI Innovation Hackathon 2026. Not a diagnosis, and it gives no treatment advice.")
+# ── Page config (must be first Streamlit call) ─────────────────────────────
+st.set_page_config(
+    page_title="AgriSight",
+    page_icon="\U0001f33f",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+styles.inject_css()
 
-ckpts = sorted(glob.glob("outputs/*.pt"))
-if not ckpts:
-    st.error("No trained model found in outputs/. Train one first (see README)."); st.stop()
+# ── Session state defaults ─────────────────────────────────────────────────
+for key, val in {
+    "page": "Home",
+    "scan_history": [],
+    "user": None,
+    "is_guest": True,       # guest by default — auth is optional
+}.items():
+    if key not in st.session_state:
+        st.session_state[key] = val
+
+# ── Sidebar navigation ─────────────────────────────────────────────────────
+NAV = {
+    "\U0001f3e0 Home":           "Home",
+    "\U0001f52c Scan a Leaf":    "Scan",
+    "\U0001f4ca Model Trust":    "Trust",
+    "\U0001f500 Compare Models": "Compare",
+    "\U0001f33e My Farm":        "Farm",
+    "\u2139\ufe0f  About & Ethics": "About",
+}
+
 with st.sidebar:
-    ck_path = st.selectbox("Model checkpoint", ckpts, index=len(ckpts) - 1)
-    thr = st.slider("Low-confidence threshold", 0.3, 0.95, 0.60, 0.05)
+    st.markdown(
+        '<div style="padding:1.5rem 0 0.5rem;text-align:center;">'
+        '<span style="font-size:2.2rem;">\U0001f33f</span>'
+        '<p style="font-family:Poppins,sans-serif;font-size:1.25rem;font-weight:800;'
+        'color:#A8E68A!important;margin:0.25rem 0 0;">AgriSight</p>'
+        '<p style="font-size:0.72rem;color:#7FB88A!important;margin:0;">CropVision AI</p>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+    st.divider()
 
-@st.cache_resource
-def load(p): return models.load_checkpoint(p, "cpu")
-model, ck = load(ck_path); classes = ck["classes"]
-pretty = lambda c: c.replace("___", ": ").replace("_", " ")
+    labels = list(NAV.keys())
+    current_idx = list(NAV.values()).index(st.session_state.page)
+    choice = st.radio("nav", labels, index=current_idx, label_visibility="collapsed")
+    st.session_state.page = NAV[choice]
 
-up = st.file_uploader("Upload a leaf photo", type=["jpg", "jpeg", "png"])
-if up:
-    img = Image.open(up).convert("RGB")
-    probs, _ = gu.predict(model, img)
-    top = np.argsort(probs)[::-1][:3]; conf = float(probs[top[0]])
-    overlay, cam = gu.gradcam_overlay(model, ck["model"], img, int(top[0]))
-    c1, c2, c3 = st.columns(3)
-    c1.image(img, caption="Input", use_container_width=True)
-    c2.image(overlay, caption="Grad-CAM: where the model looked", use_container_width=True)
-    with c3:
-        st.metric("Predicted category", pretty(classes[top[0]]))
-        st.metric("Confidence", f"{conf:.0%}")
-        for i in top: st.progress(float(probs[i]), text=f"{pretty(classes[i])}: {probs[i]:.0%}")
-    if conf < thr:
-        st.warning("Low confidence. Please retake the photo (close-up, good light, single leaf) or consult an agricultural expert.")
-    if gu.background_reliance(cam) > 0.80:
-        st.info("The model's attention is mostly at the image border, so the prediction may rely on background. Treat it with extra caution.")
-    st.caption(f"Model: {ck['model']} | training augmentation: {ck.get('aug')} | classes covered: {len(classes)}")
-else:
-    st.info("Upload a leaf image to see the predicted category, confidence and Grad-CAM heatmap.")
+    st.divider()
+    # Optional auth status
+    if st.session_state.user:
+        email = getattr(st.session_state.user, "email", "user")
+        st.markdown(
+            f'<p style="font-size:0.78rem;color:#9DC08B!important;padding:0 0.5rem;">'
+            f'\U0001f464 {email}</p>',
+            unsafe_allow_html=True,
+        )
+        if st.button("Log out", use_container_width=True):
+            st.session_state.user = None
+            st.session_state.is_guest = True
+            st.rerun()
+    else:
+        st.markdown(
+            '<p style="font-size:0.78rem;color:#7FB88A!important;padding:0 0.5rem;">'
+            '\U0001f465 Guest mode</p>',
+            unsafe_allow_html=True,
+        )
+
+# ── Page routing ───────────────────────────────────────────────────────────
+page = st.session_state.page
+
+if page == "Home":
+    from pages import home as _p; _p.render()
+elif page == "Scan":
+    from pages import scan as _p; _p.render()
+elif page == "Trust":
+    from pages import trust as _p; _p.render()
+elif page == "Compare":
+    from pages import compare as _p; _p.render()
+elif page == "Farm":
+    from pages import myfarm as _p; _p.render()
+elif page == "About":
+    from pages import about as _p; _p.render()
+
+styles.footer()

@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "AgriSight: Explainable Early Crop Stress Detection"
+type: software
+authors:
+  - family-names: "C"
+    given-names: "Shylaja"
+  - family-names: "M"
+    given-names: "Sunandita"
+repository-code: "https://github.com/Shylaja-C/agrisight"
+abstract: >
+  AgriSight is a research prototype for explainable crop-stress classification
+  from leaf photos. It trains convolutional neural networks (custom baseline,
+  MobileNetV3-Large, EfficientNet-B0) on PlantVillage lab images, evaluates
+  generalisation to real field images (PlantDoc), and uses Grad-CAM to
+  visualise model attention. The project studies the lab-to-field domain gap
+  and whether field-style data augmentation reduces it.
+keywords:
+  - crop disease
+  - plant leaf classification
+  - domain adaptation
+  - Grad-CAM
+  - explainable AI
+  - transfer learning
+license: MIT
+date-released: "2026-10-20"

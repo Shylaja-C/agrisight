@@ -1,13 +1,47 @@
-torch
-torchvision
-grad-cam
-streamlit>=1.28
-streamlit-option-menu
-scikit-learn
-matplotlib
+# AgriSight requirements
+# CPU-only PyTorch for Streamlit Community Cloud
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu
+
+# Grad-CAM explainability
+grad-cam>=1.4.8
+
+# Streamlit demo
+streamlit>=1.35
+streamlit-option-menu>=0.3.6
+
+# PDF report generation (portal.py)
+reportlab
+
+# Image processing
 Pillow
+opencv-python-headless
+
+# Scientific computing
 numpy
+scikit-learn
+
+# Visualisation
+matplotlib
+plotly
+
+# Data handling
+pandas
+PyYAML
+
+# Training utilities
 tqdm
+
+# PDF report generation (scan page)
+fpdf2
+
+# Kaggle dataset download helper (data pipeline only, not needed for demo)
 kagglehub
-supabase>=2.0.0
+
+# Optional: environment variable loading (portal.py / Supabase auth)
 python-dotenv
+
+# Optional: Supabase auth integration (portal.py, not required for core demo)
+supabase>=2.0.0
