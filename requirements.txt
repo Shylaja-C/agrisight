@@ -1,47 +1,23 @@
-# AgriSight requirements
-# CPU-only PyTorch for Streamlit Community Cloud
+# AgriSight – Requirements for Streamlit Cloud & Local Deployment
+# CPU-only PyTorch (reduces container image footprint and avoids CUDA overhead)
 --extra-index-url https://download.pytorch.org/whl/cpu
 
-torch==2.2.2+cpu
-torchvision==0.17.2+cpu
+torch==2.2.2
+torchvision==0.17.2
 
-# Grad-CAM explainability
+# Explainability & Computer Vision
 grad-cam>=1.4.8
-
-# Streamlit demo
-streamlit>=1.35
-streamlit-option-menu>=0.3.6
-
-# PDF report generation (portal.py)
-reportlab
-
-# Image processing
-Pillow
 opencv-python-headless
+Pillow
 
-# Scientific computing
+# Streamlit Web App & Visualisation
+streamlit>=1.35.0
 numpy
-scikit-learn
-
-# Visualisation
+pandas
 matplotlib
 plotly
-
-# Data handling
-pandas
+scikit-learn
 PyYAML
-
-# Training utilities
-tqdm
-
-# PDF report generation (scan page)
 fpdf2
-
-# Kaggle dataset download helper (data pipeline only, not needed for demo)
+tqdm
 kagglehub
-
-# Optional: environment variable loading (portal.py / Supabase auth)
-python-dotenv
-
-# Optional: Supabase auth integration (portal.py, not required for core demo)
-supabase>=2.0.0

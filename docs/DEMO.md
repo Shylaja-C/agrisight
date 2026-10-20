@@ -67,22 +67,30 @@ Project description, responsible-AI statement, team information.
 
 ---
 
-## Screenshots Needed
+## Application Screenshots
 
-The following screenshots should be taken from the live demo and placed in `assets/screenshots/`:
+The following interface screenshots and evaluation figures are included for jury review:
 
-| Filename | Page | What to capture |
-|---|---|---|
-| `home.png` | Home | Full home page |
-| `scan_upload.png` | Scan a Leaf | Upload widget with a leaf photo loaded |
-| `scan_result.png` | Scan a Leaf | Prediction card with confidence badge and top-3 bars |
-| `scan_heatmap.png` | Scan a Leaf | Grad-CAM side-by-side (original + overlay) |
-| `scan_low_confidence.png` | Scan a Leaf | Low-confidence warning card visible |
-| `trust_metrics.png` | Model Trust | Metric cards showing lab vs. field accuracy |
-| `trust_confusion.png` | Model Trust | Confusion matrix for one model |
-| `compare.png` | Compare Models | Side-by-side model comparison |
+### Home & Landing Experience
+![AgriSight Hero Landing](../docs/screenshots/hero_landing.png)
 
-Reference these in your presentation and in the live demo.
+### Leaf Capture & Inference Flow
+![AgriSight Check Crop Section](../docs/screenshots/check_crop_section.png)
+
+### Model Trust & Grad-CAM Analysis
+- **Confusion Matrix:** `results/mobilenet_field_plantdoc_cm.png`
+- **Grad-CAM Failure Analysis:** `results/effnet_field_failures/fail_0.png`
+
+---
+
+## Live Deployment for Juries
+
+- **Live URL:** [AgriSight Streamlit Cloud](https://agrisight-ezyz92pvapp4qnqnt7ztcr.streamlit.app/)
+- **Main Entrypoint:** `portal.py`
+- **Supported Leaf Classes:** 18 crop health conditions across Tomato, Potato, Corn, Apple, Grape, and Bell Pepper.
+- **Evaluation Datasets:**
+  - PlantVillage: [mohitsingh1804/plantvillage on Kaggle](https://www.kaggle.com/datasets/mohitsingh1804/plantvillage)
+  - PlantDoc: [andresmgs/plantdec on Kaggle](https://www.kaggle.com/datasets/andresmgs/plantdec)
 
 ---
 
@@ -96,7 +104,7 @@ Reference these in your presentation and in the live demo.
 Show the home page. Narrate: "AgriSight is a research prototype that classifies crop-leaf photos and shows where the model looked — using Grad-CAM. We also measure how well models trained in a lab transfer to real field conditions."
 
 **[0:20 – 0:50] Scan a Leaf — successful prediction**
-Navigate to Scan a Leaf. Upload a clear tomato leaf photo. Walk through the confidence badge, top-3 predictions, and the Grad-CAM overlay. Point out where the model is attending.
+Navigate to Scan a Leaf. Upload a clear tomato leaf photo or click 'Try demo image'. Walk through the confidence badge, top-3 predictions, and the Grad-CAM overlay. Point out where the model is attending.
 
 **[0:50 – 1:20] Low-confidence example**
 Upload a blurry or unusual photo. Show the low-confidence warning card. Explain why this is important: "We flag uncertain predictions rather than confidently giving a wrong answer."
@@ -109,15 +117,3 @@ Show one confusion matrix. Point out which classes are most confused.
 
 **[2:30 – 3:00] Conclusion**
 Return to home. Mention the honest limitations and research prototype status. Close with the team names.
-
----
-
-## Screenshots Reference in Docs
-
-When screenshots are added, reference them in README.md like this:
-
-```markdown
-![Home page](assets/screenshots/home.png)
-![Scan result](assets/screenshots/scan_result.png)
-![Grad-CAM heatmap](assets/screenshots/scan_heatmap.png)
-```

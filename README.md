@@ -19,7 +19,9 @@
 
 | | |
 |---|---|
-| 🚀 Live Demo | `TODO: add Streamlit Community Cloud URL` |
+| 🚀 Live Demo | [agrisight-ezyz92pvapp4qnqnt7ztcr.streamlit.app](https://agrisight-ezyz92pvapp4qnqnt7ztcr.streamlit.app/) |
+| 🌿 PlantVillage Dataset | [mohitsingh1804/plantvillage on Kaggle](https://www.kaggle.com/datasets/mohitsingh1804/plantvillage) |
+| 🌾 PlantDoc Dataset | [andresmgs/plantdec on Kaggle](https://www.kaggle.com/datasets/andresmgs/plantdec) |
 | 🎥 Demo Video | `TODO: add YouTube / Drive link` |
 | 📓 Kaggle Notebook | `TODO: add Kaggle notebook link` |
 
@@ -141,11 +143,24 @@ See confusion matrices in `results/*_plantdoc_cm.png` and Grad-CAM failure examp
 
 ## 📸 Screenshots & Demo
 
-See [docs/DEMO.md](docs/DEMO.md) for a full walkthrough, screenshot guide, and demo video script.
+Explore the AgriSight farmer portal UI and transparent explainability features:
 
-Screenshots are stored in `assets/screenshots/` — see [assets/screenshots/README.md](assets/screenshots/README.md) for the list of screenshots needed.
+### 1. Hero Landing Page
+> Editorial, farmer-first design with transparent research metrics.
+![AgriSight Hero Landing](docs/screenshots/hero_landing.png)
 
-> `TODO: add screenshots after running the live demo`
+### 2. Leaf Photo Input & Inspection
+> Multi-modal input options: Choose a file, use live camera, or load built-in demo field leaves.
+![AgriSight Check Crop Section](docs/screenshots/check_crop_section.png)
+
+### 3. Model Transparency & Grad-CAM Visual Evidence
+> Real confusion matrix on PlantDoc field evaluation and Grad-CAM attention heatmap analysis:
+<p align="center">
+  <img src="results/mobilenet_field_plantdoc_cm.png" width="48%" alt="MobileNet Field Confusion Matrix" />
+  <img src="results/effnet_field_failures/fail_0.png" width="48%" alt="Grad-CAM Failure Analysis" />
+</p>
+
+See [docs/DEMO.md](docs/DEMO.md) for the complete walkthrough and video script.
 
 ---
 
