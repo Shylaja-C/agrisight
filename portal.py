@@ -61,6 +61,9 @@ html, body, [data-testid="stAppViewContainer"] {
 }
 [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.15) !important; }
 
+/* ── Hide Streamlit automatic page links list (portal, about, scan...) ── */
+[data-testid="stSidebarNav"] { display: none !important; }
+
 /* ── Editorial Hero banner (from jury screenshots) ── */
 .hero-editorial {
     background: linear-gradient(135deg, rgba(16,40,19,0.92) 0%, rgba(22,58,26,0.88) 50%, rgba(38,82,43,0.85) 100%),
